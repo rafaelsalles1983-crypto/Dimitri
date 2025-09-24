@@ -34,12 +34,60 @@
 
 <style>
 /* Aqui você mantém todo o seu CSS existente, mascote, chat, neon, lições bloqueadas, etc. */
+
+
+/* Menu hamburguer */
+.menu-btn {
+  display: none;
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Menu mobile escondido por padrão */
+@media screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    display: none;
+    background: white;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1100;
+  }
+}
+
+
+
+
 </style>
 </head>
 <body>
+
+
 <header>
   <span id="siteTitle">Славянский клуб</span>
-  <button id="menuToggle" class="menu-btn">☰</button> <!-- Botão hamburguer -->
+  
+  <!-- INSERIR BOTÃO AQUI -->
+  <button id="menuToggle" class="menu-btn">☰</button>
+  
   <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
   <button id="languageToggle" style="margin-left:20px;">PT</button>
   <button id="loginBtn" style="margin: 10px; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; border: none;">
@@ -47,6 +95,9 @@
   </button>
   <span id="welcomeUser" style="position:absolute; top:15px; right:20px; color:blue; font-weight:bold; display:none;"></span>
 </header>
+
+
+
 
 <script>
 // Textos em Russo e Português
@@ -906,6 +957,7 @@ loginBtn.addEventListener('click', () => {
   </div>
 </div>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const menuBtn = document.getElementById('menuToggle');
@@ -926,7 +978,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-	
+
 </body>
 </html>
-
