@@ -39,15 +39,13 @@
 <body>
 <header>
   <span id="siteTitle">Славянский клуб</span>
- 	 <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
-	 <button id="languageToggle" style="margin-left:20px;">PT</button>
-
-<!-- Botão de Login para Chat -->
-<button id="loginBtn" style="margin: 10px; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; border: none;">
-  Login para Chat
-</button>
-
-<span id="welcomeUser" style="position:absolute; top:15px; right:20px; color:blue; font-weight:bold; display:none;"></span>
+  <button id="menuToggle" class="btn" style="margin-left:20px;">☰ Menu</button>
+  <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
+  <button id="languageToggle" style="margin-left:20px;">PT</button>
+  <button id="loginBtn" style="margin: 10px; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; border: none;">
+    Login para Chat
+  </button>
+  <span id="welcomeUser" style="position:absolute; top:15px; right:20px; color:blue; font-weight:bold; display:none;"></span>
 </header>
 
 <script>
@@ -908,5 +906,39 @@ loginBtn.addEventListener('click', () => {
   </div>
 </div>
 
+
+<!-- Botão do menu -->
+<button id="menuToggle" style="position:fixed; top:15px; left:15px; z-index:2000;">☰ Menu</button>
+
+<!-- Seu nav -->
+<nav>
+    <ul>
+        <li><a href="#" onclick="saveChatState(); return false;">Перетаскивание</a></li>
+        <li><a href="crossword.html" onclick="saveChatState()">прогресс</a></li>
+        <li><a href="exercises.html" onclick="saveChatState()">упражнения</a></li>
+        <li><a href="jogoCores.html" onclick="saveChatState()">Игра Цвета</a></li>
+        <li><a href="#" onclick="saveChatState(); return false;">Кто мы</a></li>
+        <li><a href="contact.html" onclick="saveChatState()">Контакт</a></li>
+        <li><a href="#" onclick="abrirDicionario(); return false;">словáрь</a></li>
+    </ul>
+</nav>
+
+<!-- Outros elementos da página -->
+
+<!-- Scripts finais -->
+<script>
+const menuToggle = document.getElementById('menuToggle');
+const nav = document.querySelector('nav');
+
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('show');
+});
+</script>
+</body>
+
+
+
+	
 </body>
 </html>
+
