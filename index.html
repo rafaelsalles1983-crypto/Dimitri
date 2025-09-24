@@ -51,10 +51,11 @@
     flex-direction: column;
     display: none;
     background: white;
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    width: 200px;
+    position: relative; /* agora empurra o conteúdo para baixo */
+    top: 0;              /* remove o deslocamento */
+    right: 0;
+    width: 100%;         /* ocupa toda a largura do container */
+    border-radius: 0;    /* remove arredondamento se quiser */
     padding: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     border-radius: 8px;
@@ -67,9 +68,9 @@
 
   .menu-btn {
     display: inline-block;
-    position: absolute;
-    top: 15px;
-    right: 20px;
+    position: relative; /* fica dentro do fluxo normal do header */
+    margin-left: auto;  /* empurra o botão para a direita */
+    margin-right: 10px;
     z-index: 1100;
   }
 }
@@ -976,8 +977,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-
-
-
 </body>
 </html>
