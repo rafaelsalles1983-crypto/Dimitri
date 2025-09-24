@@ -45,35 +45,37 @@
   cursor: pointer;
 }
 
-/* Menu mobile escondido por padrão */
+
 @media screen and (max-width: 768px) {
   nav ul {
     flex-direction: column;
     display: none;
-    background: white;
-    position: relative; /* agora empurra o conteúdo para baixo */
-    top: 0;              /* remove o deslocamento */
-    right: 0;
-    width: 100%;         /* ocupa toda a largura do container */
-    border-radius: 0;    /* remove arredondamento se quiser */
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    border-radius: 8px;
-    z-index: 1000;
+    position: static; /* empurra conteúdo */
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
   }
 
   nav ul.show {
-    display: flex;
+    display: block; /* block ao invés de flex */
+  }
+
+  nav ul li {
+    margin: 5px 0;
+    text-align: center;
   }
 
   .menu-btn {
     display: inline-block;
-    position: relative; /* fica dentro do fluxo normal do header */
-    margin-left: auto;  /* empurra o botão para a direita */
+    float: right;
     margin-right: 10px;
-    z-index: 1100;
+    z-index: 10;
   }
 }
+
 
 
 
@@ -307,20 +309,9 @@ updateLanguage();
 }
 
 #congratsMessage {
-  display:none;
-  font-size:3em;
-  font-weight:bold;
-  color:#0f0;
-  text-align:center;
-  margin-top:20px;
-  animation: neonBlink 1s infinite;
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2000;
-  pointer-events: none;
+  z-index: 1500; /* menor que overlay/modal */
 }
+
 
 /* Mascote */
 #dimitri {
@@ -329,8 +320,9 @@ updateLanguage();
   right: 20px;
   width: 120px;
   height: 180px;
-  z-index: 1000;
+  z-index: 500; /* reduzir z-index */
 }
+
 #dimitri .head {
   width: 80px;
   height: 80px;
@@ -977,5 +969,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+
+
 </body>
 </html>
