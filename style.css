@@ -854,3 +854,41 @@ nav ul li button:hover {
 .btn:hover {
     background-color: #45a049;
 }
+/* Menu hamburguer */
+.menu-btn {
+  display: none;
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Menu mobile escondido por padrão */
+@media screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    display: none;
+    background: white;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1100;
+  }
+}
+
