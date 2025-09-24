@@ -36,15 +36,49 @@
 /* Aqui você mantém todo o seu CSS existente, mascote, chat, neon, lições bloqueadas, etc. */
 
 
-/* Menu hamburguer */
+/* Menu hamburguer no mobile */
 .menu-btn {
   display: none;
-  font-size: 1.5em;
+  font-size: 1.8em;
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 1001;
+  position: relative;
 }
 
+/* Overlay do menu */
+nav ul {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+nav ul.show {
+  display: flex;
+}
+
+nav ul li {
+  margin: 20px 0;
+}
+
+nav ul li a {
+  color: #fff;
+  font-size: 1.8em;
+  text-decoration: none;
+}
 
 @media screen and (max-width: 768px) {
   nav ul {
