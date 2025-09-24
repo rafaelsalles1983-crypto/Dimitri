@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Славянский клуб - Exercícios</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+#exercise-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.option-btn {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  transition: 0.3s;
+}
+
+.option-btn:hover {
+  background-color: #45a049;
+}
+
+#progress {
+  margin-top: 20px;
+  font-size: 1em;
+}
+
+#score {
+  margin-top: 10px;
+  font-size: 1em;
+}
+</style>
+</head>
+<body>
+
+<header>Славянский клуб</header>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Перетаскивание</a></li>
+        <li><a href="crossword.html">прогресс</a></li>
+        <li><a href="exercises.html">упражнения</a></li>
+        <li><a href="#">Кто мы</a></li>
+        <li><a href="contact.html">Контакт</a></li>
+    </ul>
+</nav>
+
+<div id="exercise-container">
+  <div id="sentence"></div>
+  <div id="options"></div>
+  <div id="progress"></div>
+  <div id="score"></div>
+</div>
+
+<!-- Mascote e parabéns -->
+<div id="dimitri">
+  <div class="head">
+    <div class="ushanka">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+    </div>
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="eyebrow left"></div>
+    <div class="eyebrow right"></div>
+    <div class="mouth"></div>
+  </div>
+  <div class="body">
+    <div class="arm left"></div>
+    <div class="arm right"></div>
+  </div>
+</div>
+
+<div id="congratsMessage">Поздравления!</div>
+
+<script>
+const exercises = [
+  {sentence: "Eu ___ ao mercado todos os dias.", options: ["vai", "vou", "vamos", "vão"], answer: "vou"},
+  {sentence: "Ele ___ no Brasil agora.", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Nós ___ felizes hoje.", options: ["estamos", "sou", "são", "é"], answer: "estamos"},
+  {sentence: "Você ___ português muito bem.", options: ["fala", "falamos", "falam", "falo"], answer: "fala"},
+  {sentence: "Ela ___ professora de russo.", options: ["é", "está", "são", "estamos"], answer: "é"},
+  {sentence: "Я ___ дома.", options: ["estou", "é", "são", "estamos"], answer: "estou"},
+  {sentence: "Nós ___ amigos desde crianças.", options: ["somos", "estamos", "são", "é"], answer: "somos"},
+  {sentence: "Ele ___ comprar pão amanhã.", options: ["vai", "vou", "vamos", "vão"], answer: "vai"},
+  {sentence: "Você ___ cansado?", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Eu ___ estudante de russo.", options: ["sou", "estou", "são", "é"], answer: "sou"},
+  {sentence: "Nós ___ na escola ontem.", options: ["estávamos", "são", "é", "estamos"], answer: "estávamos"},
+  {sentence: "Ele ___ com fome agora.", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Она ___ медсестра.", options: ["é", "está", "são", "estamos"], answer: "é"},
+  {sentence: "Eu ___ português fluentemente.", options: ["falo", "fala", "falamos", "falam"], answer: "falo"},
+  {sentence: "Nós ___ cansados depois da viagem.", options: ["estamos", "é", "são", "estávamos"], answer: "estamos"},
+  {sentence: "Você ___ com frio?", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Eles ___ na Rússia agora.", options: ["estão", "são", "é", "estamos"], answer: "estão"},
+  {sentence: "Я ___ студент.", options: ["sou", "estou", "são", "é"], answer: "sou"},
+  {sentence: "Nós ___ felizes com a notícia.", options: ["estamos", "é", "são", "estávamos"], answer: "estamos"},
+  {sentence: "Ele ___ médico de profissão.", options: ["é", "está", "são", "estamos"], answer: "é"},
+  {sentence: "Você ___ pronto para a prova?", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Eu ___ no parque ontem.", options: ["estava", "sou", "são", "é"], answer: "estava"},
+  {sentence: "Eles ___ amigos desde a infância.", options: ["são", "estão", "é", "estávamos"], answer: "são"},
+  {sentence: "Nós ___ estudando russo agora.", options: ["estamos", "é", "são", "estávamos"], answer: "estamos"},
+  {sentence: "Ela ___ cansada depois da corrida.", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Eu ___ com fome.", options: ["estou", "sou", "são", "é"], answer: "estou"},
+  {sentence: "Eles ___ viajando para Portugal.", options: ["estão", "são", "é", "estamos"], answer: "estão"},
+  {sentence: "Nós ___ aprendendo russo juntos.", options: ["estamos", "é", "são", "estávamos"], answer: "estamos"},
+  {sentence: "Você ___ satisfeito com a resposta?", options: ["está", "é", "são", "estamos"], answer: "está"},
+  {sentence: "Ele ___ muito inteligente.", options: ["é", "está", "são", "estamos"], answer: "é"},
+  {sentence: "Eu ___ feliz por estar aqui.", options: ["estou", "sou", "são", "é"], answer: "estou"}
+];
+
+let currentIndex = 0;
+let correctCount = 0;
+let wrongCount = 0;
+
+const sentenceEl = document.getElementById("sentence");
+const optionsEl = document.getElementById("options");
+const progressEl = document.getElementById("progress");
+const scoreEl = document.getElementById("score");
+
+const dimitri = document.getElementById('dimitri');
+const congratsMessage = document.getElementById('congratsMessage');
+
+function showExercise() {
+  if(currentIndex >= exercises.length){
+    dimitriNeonCelebration();
+    sentenceEl.textContent = "Parabéns! Você concluiu todos os exercícios!";
+    optionsEl.innerHTML = "";
+    progressEl.textContent = "";
+    scoreEl.textContent = `Corretas: ${correctCount} | Erradas: ${wrongCount} | Acertos: ${((correctCount/exercises.length)*100).toFixed(1)}%`;
+    return;
+  }
+
+  const exercise = exercises[currentIndex];
+  sentenceEl.textContent = exercise.sentence;
+
+  optionsEl.innerHTML = "";
+  exercise.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.className = "option-btn";
+    btn.onclick = () => checkAnswer(opt);
+    optionsEl.appendChild(btn);
+  });
+
+  updateProgress();
+}
+
+function checkAnswer(selected){
+  const correct = exercises[currentIndex].answer;
+  if(selected === correct){
+    correctCount++;
+    dimitriAcena();
+  } else {
+    wrongCount++;
+    dimitriTriste();
+  }
+  currentIndex++;
+  setTimeout(showExercise, 500);
+}
+
+function updateProgress(){
+  const percentage = ((correctCount+wrongCount)/exercises.length)*100;
+  progressEl.textContent = `Progresso: ${percentage.toFixed(1)}%`;
+  scoreEl.textContent = `Corretas: ${correctCount} | Erradas: ${wrongCount}`;
+}
+
+function dimitriAcena() {
+  dimitri.classList.add('acenando');
+  dimitri.classList.remove('triste');
+  setTimeout(()=> dimitri.classList.remove('acenando'), 1200);
+}
+
+function dimitriTriste() {
+  dimitri.classList.add('triste');
+  setTimeout(()=> dimitri.classList.remove('triste'), 1200);
+}
+
+function dimitriNeonCelebration() {
+  dimitri.classList.add('neon');
+  congratsMessage.style.display = 'block';
+  setTimeout(() => {
+    dimitri.classList.remove('neon');
+    congratsMessage.style.display = 'none';
+  }, 4000);
+}
+
+showExercise();
+</script>
+
+</body>
+</html>

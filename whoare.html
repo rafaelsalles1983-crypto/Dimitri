@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Славянский клуб - Exercício Cruzado</title>
+  <link rel="icon" type="image/png" href="images/dimitri-favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <span id="headerTitle">Славянский клуб</span>
+  <!-- Botão de idioma -->
+  <button id="langBtn" onclick="toggleLang()">🌐 RU</button>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html" onclick="saveChatState()" id="nav-drag">Перетаскивание</a></li>
+    <li><a href="progress.html" onclick="saveChatState()" id="nav-progress">прогресс</a></li>
+    <li><a href="#" onclick="saveChatState(); return false;" id="nav-whoare">кто мы</a></li>
+    <li><a href="contact.html" onclick="saveChatState()" id="nav-contact">контакт</a></li>
+  </ul>
+</nav>
+
+<!-- Overlay do Dicionário -->
+<div id="dictionaryOverlay" class="dictionary-overlay">
+  <div class="dictionary-content" id="dictionaryContent">
+    <span class="dictionary-close-btn" onclick="fecharDicionario()">&times;</span>
+    <!-- Conteúdo do dicionário será inserido aqui via JS -->
+  </div>
+</div>
+
+<script>
+// Traduções
+const translations = {
+  pt: {
+    header: "Clube Eslavo",
+    nav: {
+      drag: "Arrastar",
+      progress: "Progresso",
+      whoare: "Quem somos",
+      contact: "Contato",
+      dictionary: "Dicionário"
+    }
+  },
+  ru: {
+    header: "Славянский клуб",
+    nav: {
+      drag: "Перетаскивание",
+      progress: "Прогресс",
+      whoare: "Кто мы",
+      contact: "Контакт",
+      dictionary: "Словарь"
+    }
+  }
+};
+
+// Aplica traduções
+function applyTranslations(lang) {
+  localStorage.setItem("lang", lang);
+  const t = translations[lang];
+
+  document.getElementById("headerTitle").innerText = t.header;
+  document.getElementById("nav-drag").innerText = t.nav.drag;
+  document.getElementById("nav-progress").innerText = t.nav.progress;
+  document.getElementById("nav-whoare").innerText = t.nav.whoare;
+  document.getElementById("nav-contact").innerText = t.nav.contact;
+  document.getElementById("nav-dictionary").innerText = t.nav.dictionary;
+
+  document.getElementById("langBtn").innerText = lang === "ru" ? "🌐 RU" : "🌐 PT";
+}
+
+// Alterna idioma
+function toggleLang() {
+  let current = localStorage.getItem("lang") || "ru";
+  let next = current === "ru" ? "pt" : "ru";
+  applyTranslations(next);
+}
+
+// Carrega idioma salvo ao abrir a página
+window.addEventListener("DOMContentLoaded", () => {
+  const savedLang = localStorage.getItem("lang") || "ru";
+  applyTranslations(savedLang);
+});
+</script>
+
+</body>
+</html>

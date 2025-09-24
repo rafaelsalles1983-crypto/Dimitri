@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo - Славянский клуб</title>
+  <link rel="stylesheet" href="style.css">
+<button id="logoutBtn" style="position:fixed; top:10px; right:10px; display:none;">Sair</button>
+
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="scripts/firebase-config.js"></script>
+  <script src="scripts/admin.js" defer></script>
+</head>
+auth.onAuthStateChanged((user) => {
+  const protectedPages = ["index.html", "progress.html", "admin.html"];
+  const currentPage = window.location.pathname.split("/").pop();
+
+  if (!user && protectedPages.includes(currentPage)) {
+    window.location.href = "login.html"; // redireciona se não estiver logado
+  }
+});
+
+<body>
+  <header>Painel Administrativo</header>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="scripts/firebase-config.js"></script>
+
+
+  <div class="content">
+    <button id="logoutBtn">Sair</button>
+
+    <h2>Cadastrar Conteúdo</h2>
+    <form id="contentForm">
+      <label for="title">Título:</label>
+      <input type="text" id="title" required>
+      
+      <label for="text">Texto:</label>
+      <textarea id="text" required></textarea>
+      
+      <button type="submit">Salvar</button>
+    </form>
+
+    <h2>Conteúdos Cadastrados</h2>
+    <ul id="contentList"></ul>
+  </div>
+</body>
+</html>

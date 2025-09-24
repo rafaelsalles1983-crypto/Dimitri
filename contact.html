@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Славянский клуб - Exercício Cruzado</title>
+  <link rel="icon" type="image/png" href="images/dimitri-favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <span id="headerTitle">Славянский клуб</span>
+  <!-- Botão de idioma -->
+  <button id="langBtn" onclick="toggleLang()">🌐 RU</button>
+</header>
+
+<nav>
+  <ul>
+  	<li><a href="index.html" onclick="saveChatState(); return false;">Перетаскивание</a></li>
+        <li><a href="crossword.html" onclick="saveChatState()">прогресс</a></li>
+        <li><a href="exercises.html" onclick="saveChatState()">упражнения</a></li>
+  	<li><a href="whoare.html" onclick="saveChatState(); return false;">Кто мы</a></li>
+        <li><a href="contact.html" onclick="saveChatState()">Контакт</a></li>
+	<li><a href="#" onclick="abrirDicionario(); return false;">словáрь</a></li>  </ul>
+</nav>
+
+<div class="content">
+  <h2 id="contactTitle">Контакт</h2>
+  <p id="contactText">Здесь вы можете entrar em contato conosco.</p>
+</div>
+
+<script>
+// Traduções
+const translations = {
+  pt: {
+    header: "Clube Eslavo",
+    nav: {
+      drag: "Arrastar",
+      progress: "Progresso",
+      whoare: "Quem somos",
+      contact: "Contato",
+      dictionary: "Dicionário"
+    },
+    page: {
+      title: "Contato",
+      text: "Aqui você pode entrar em contato conosco."
+    }
+  },
+  ru: {
+    header: "Славянский клуб",
+    nav: {
+      drag: "Перетаскивание",
+      progress: "Прогресс",
+      whoare: "Кто мы",
+      contact: "Контакт",
+      dictionary: "Словарь"
+    },
+    page: {
+      title: "Контакт",
+      text: "Здесь вы можете entrar em contato conosco."
+    }
+  }
+};
+
+// Aplica traduções
+function applyTranslations(lang) {
+  localStorage.setItem("lang", lang);
+  const t = translations[lang];
+
+  document.getElementById("headerTitle").innerText = t.header;
+  document.getElementById("nav-drag").innerText = t.nav.drag;
+  document.getElementById("nav-progress").innerText = t.nav.progress;
+  document.getElementById("nav-whoare").innerText = t.nav.whoare;
+  document.getElementById("nav-contact").innerText = t.nav.contact;
+  document.getElementById("nav-dictionary").innerText = t.nav.dictionary;
+
+  document.getElementById("contactTitle").innerText = t.page.title;
+  document.getElementById("contactText").innerText = t.page.text;
+
+  document.getElementById("langBtn").innerText = lang === "ru" ? "🌐 RU" : "🌐 PT";
+}
+
+// Alterna idioma
+function toggleLang() {
+  let current = localStorage.getItem("lang") || "ru";
+  let next = current === "ru" ? "pt" : "ru";
+  applyTranslations(next);
+}
+
+// Carrega idioma salvo ao abrir a página
+window.addEventListener("DOMContentLoaded", () => {
+  const savedLang = localStorage.getItem("lang") || "ru";
+  applyTranslations(savedLang);
+});
+</script>
+
+</body>
+</html>

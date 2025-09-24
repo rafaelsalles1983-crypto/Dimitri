@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Славянский клуб</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Configuração Firebase (igual a usada no index.html)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCVt4eQOSUMhtKTUc89lAIM-AwrPakEOOI",
+      authDomain: "clube-eslavo-dimitri.firebaseapp.com",
+      projectId: "clube-eslavo-dimitri",
+      storageBucket: "clube-eslavo-dimitri.firebasestorage.app",
+      messagingSenderId: "696802076277",
+      appId: "1:696802076277:web:3be4a9fb64001e25cefa3c",
+      measurementId: "G-1H63WPQT0V"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+  </script>
+</head>
+<body>
+  <header>Славянский клуб</header>
+
+  <div class="content">
+    <h2>Acessar Conta</h2>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="E-mail" required>
+      <input type="password" id="loginPassword" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="loginError" style="color:red; display:none;"></p>
+
+    <hr>
+    <h2>Cadastrar</h2>
+    <form id="registerForm">
+      <input type="text" id="regName" placeholder="Nome" required>
+      <input type="number" id="regAge" placeholder="Idade" required>
+      <input type="email" id="regEmail" placeholder="E-mail" required>
+      <input type="password" id="regPassword" placeholder="Senha" required>
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p id="registerError" style="color:red; display:none;"></p>
+  </div>
+
+  <script>
+    // LOGIN
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const senha = document.getElementById("loginPassword").value;
+
+      auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+          const redirect = localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirect;
+        })
+        .catch(err => {
+          document.getElementById("loginError").innerText = err.message;
+          document.getElementById("loginError").style.display = "block";
+        });
+    });
+
+    // CADASTRO
+    document.getElementById("registerForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("regEmail").value;
+      const senha = document.getElementById("regPassword").value;
+
+      auth.createUserWithEmailAndPassword(email, senha)
+        .then(() => {
+          const redirect = localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirect;
+        })
+        .catch(err => {
+          document.getElementById("registerError").innerText = err.message;
+          document.getElementById("registerError").style.display = "block";
+        });
+    });
+  </script>
+</body>
+</html>

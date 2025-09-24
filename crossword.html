@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Славянский клуб - Exercício Cruzado</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="images/dimitri-favicon.png">
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  // Configuração Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVt4eQOSUMhtKTUc89lAIM-AwrPakEOOI",
+    authDomain: "clube-eslavo-dimitri.firebaseapp.com",
+    projectId: "clube-eslavo-dimitri",
+    storageBucket: "clube-eslavo-dimitri.firebasestorage.app",
+    messagingSenderId: "696802076277",
+    appId: "1:696802076277:web:3be4a9fb64001e25cefa3c",
+    measurementId: "G-1H63WPQT0V"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Proteção de acesso e mostrar logout
+  auth.onAuthStateChanged((user) => {
+    if (!user) {
+      localStorage.setItem("redirectAfterLogin", "progress.html");
+      window.location.href = "login.html";
+    } else {
+      console.log("Usuário logado:", user.email);
+      const logoutLink = document.getElementById("logoutLink");
+      if(logoutLink) logoutLink.style.display = "inline-block";
+    }
+  });
+</script>
+</head>
+
+<body>
+<header>
+  Славянский клуб
+  <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
+</header>
+
+
+<nav>
+  <ul>
+    <li><a href="index.html" onclick="saveChatState()">Перетаскивание</a></li>
+    <li><a href="crossword.html" onclick="saveChatState()">Прогресс</a></li>
+     <li><a href="exercises.html" onclick="saveChatState()">упражнения</a></li>
+    <li><a href="#" onclick="saveChatState(); return false;">Кто мы</a></li>
+    <li><a href="contact.html" onclick="saveChatState()">Контакт</a></li>
+  </ul>
+</nav>
+
+<div class="main-content">
+  <div id="progressContainer">
+    <div id="progressText"></div>
+    <div id="progressBarContainer">
+      <div id="progressBar"></div>
+    </div>
+  </div>
+  <div id="cruzadoContainer" class="content"></div>
+</div>
+
+<!-- Exercícios cruzados -->
+<script>
+const exercises = [
+  {russian:['Привет','Спасибо','Пожалуйста'], portuguese:['Olá','Obrigado','Por favor']},
+  {russian:['Как дела?','Хорошо','Плохо'], portuguese:['Como você está?','Bem','Mal']},
+  {russian:['До свидания','Пока','Увидимся'], portuguese:['Adeus','Tchau','Até logo']},
+  {russian:['Доброе утро','Спокойной ночи','Добрый вечер'], portuguese:['Bom dia','Boa noite','Boa tarde']},
+  {russian:['Я хочу воды','Я голоден','Я устал'], portuguese:['Eu quero água','Estou com fome','Estou cansado']},
+  {russian:['Где туалет?','Где вход?','Где выход?'], portuguese:['Onde é o banheiro','Onde é a entrada','Onde é a saída']},
+  {russian:['Я не понимаю','Я понимаю','Я знаю'], portuguese:['Eu não entendo','Eu entendo','Eu sei']},
+  {russian:['Помогите, пожалуйста','Вызовите полицию','Позовите врача'], portuguese:['Ajude-me, por favor','Chame a polícia','Chame um médico']},
+  {russian:['Меня зовут Анна','Меня зовут Иван','Меня зовут Сергей'], portuguese:['Meu nome é Anna','Meu nome é Ivan','Meu nome é Sergey']},
+  {russian:['Сколько это стоит?','Сколько времени?','Сколько лет?'], portuguese:['Quanto custa isso?','Que horas são?','Quantos anos?']},
+  {russian:['Да','Нет','Возможно'], portuguese:['Sim','Não','Talvez']},
+  {russian:['Пожалуйста','Спасибо','Извините'], portuguese:['Por favor','Obrigado','Desculpe']},
+  {russian:['Добрый день','Доброе утро','Доброй ночи'], portuguese:['Boa tarde','Bom dia','Boa noite']},
+  {russian:['Я люблю русский язык','Я ненавижу русский язык','Я изучаю русский язык'], portuguese:['Eu amo russo','Eu odeio russo','Eu estudo russo']},
+  {russian:['До завтра','До скорого','До встречи'], portuguese:['Até amanhã','Até breve','Até logo']},
+  {russian:['Красный','Синий','Зелёный'], portuguese:['Vermelho','Azul','Verde']},
+  {russian:['Жёлтый','Чёрный','Белый'], portuguese:['Amarelo','Preto','Branco']},
+  {russian:['Один','Два','Три'], portuguese:['Um','Dois','Três']},
+  {russian:['Четыре','Пять','Шесть'], portuguese:['Quatro','Cinco','Seis']},
+  {russian:['Хлеб','Молоко','Сыр'], portuguese:['Pão','Leite','Queijo']},
+  {russian:['Яблоко','Банан','Апельсин'], portuguese:['Maçã','Banana','Laranja']},
+  {russian:['Идти','Бежать','Смотреть'], portuguese:['Ir','Correr','Olhar']},
+  {russian:['Есть','Пить','Спать'], portuguese:['Comer','Beber','Dormir']},
+  {russian:['Мать','Отец','Брат'], portuguese:['Mãe','Pai','Irmão']},
+  {russian:['Сестра','Дедушка','Бабушка'], portuguese:['Irmã','Avô','Avó']},
+  {russian:['Книга','Ручка','Стол'], portuguese:['Livro','Caneta','Mesa']},
+  {russian:['Стул','Окно','Дверь'], portuguese:['Cadeira','Janela','Porta']}
+];
+
+function shuffle(array){for(let i=array.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]];}return array;}
+shuffle(exercises);
+
+// Embaralha também as palavras de cada exercício
+exercises.forEach(ex => {
+    ex.russian = shuffle([...ex.russian]);     // copia e embaralha
+    ex.portuguese = shuffle([...ex.portuguese]);
+});
+
+
+let currentExercise = 0;
+let totalCorrect = 0;
+
+function updateProgress(){
+  const progressText = document.getElementById('progressText');
+  const progressBar = document.getElementById('progressBar');
+  progressText.textContent = `Exercício ${currentExercise+1} de ${exercises.length}`;
+  const percent = Math.round((currentExercise)/exercises.length*100);
+  progressBar.style.width = percent + '%';
+}
+
+function loadExercise(){
+  const container = document.getElementById('cruzadoContainer');
+  if(currentExercise >= exercises.length){
+    const percent = Math.round((totalCorrect/exercises.length)*100);
+    container.innerHTML = `<h2>Вы завершили все упражнения!</h2><p>Você acertou ${percent}% dos exercícios!</p>`;
+    document.getElementById('progressText').textContent = '';
+    document.getElementById('progressBar').style.width = '100%';
+    return;
+  }
+  updateProgress();
+  const ex = exercises[currentExercise];
+  let russianHTML='', portugueseHTML='';
+  ex.russian.forEach((word,i)=>{russianHTML += `<div class="word" draggable="true" id="r${currentExercise}_${i}">${word}</div>`;});
+  ex.portuguese.forEach((word,i)=>{portugueseHTML += `<div class="placeholder" data-correct="r${currentExercise}_${i}">${word}</div>`;});
+  container.innerHTML = `
+    <h2>Упражнение ${currentExercise+1} – Перетащите слова к правильному переводу ✅</h2>
+    <div class="container">
+      <div class="column" id="russian">${russianHTML}</div>
+      <div class="column" id="portuguese">${portugueseHTML}</div>
+    </div>
+    <button id="checkBtn" class="btn">Проверить</button>
+    <p class="feedback"></p>
+  `;
+  const words = document.querySelectorAll('.word');
+  const placeholders = document.querySelectorAll('.placeholder');
+  let draggedWord=null;
+  words.forEach(word => word.addEventListener('dragstart', e=>{draggedWord=e.target;}));
+  placeholders.forEach(ph=>{
+    ph.addEventListener('dragover', e=>e.preventDefault());
+    ph.addEventListener('drop', e=>{
+      if(!e.target.classList.contains('placeholder')) return;
+      if(e.target.children.length===0) e.target.appendChild(draggedWord);
+    });
+  });
+  document.getElementById('checkBtn').addEventListener('click', checkAll);
+}
+
+function checkAll(){
+  const placeholders = document.querySelectorAll('.placeholder');
+  let score=0;
+  placeholders.forEach(ph=>{
+    if(ph.children.length>0 && ph.children[0].id===ph.getAttribute('data-correct')){
+      ph.classList.add('correct'); ph.classList.remove('wrong'); score++;
+    } else { ph.classList.add('wrong'); ph.classList.remove('correct'); }
+  });
+  const feedback=document.querySelector('.feedback');
+  feedback.textContent=`Вы acertou ${score} de ${placeholders.length} palavras`;
+  if(score===placeholders.length) totalCorrect++;
+  currentExercise++;
+  setTimeout(loadExercise,1500);
+}
+
+loadExercise();
+</script>
+
+<!-- Script para salvar estado do chat -->
+<script>
+function saveChatState(){
+  const chatData = {lastVisited:new Date().toISOString(), notes:"Usuário abriu um link do menu"};
+  localStorage.setItem('chatState', JSON.stringify(chatData));
+  console.log('Estado do chat salvo:', chatData);
+}
+</script>
+
+<!-- Logout -->
+<script>
+auth.onAuthStateChanged((user) => {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (!user) {
+    localStorage.setItem("redirectAfterLogin", "crossword.html");
+    window.location.href = "login.html";
+  } else {
+    console.log("Usuário logado:", user.email);
+    if(logoutBtn){
+      logoutBtn.style.opacity = 1; // faz o botão aparecer suavemente
+    }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if(logoutBtn){
+    logoutBtn.addEventListener("click", (e)=>{
+      e.preventDefault();
+      auth.signOut().then(()=>{
+        localStorage.removeItem("redirectAfterLogin");
+        window.location.href="index.html";
+      });
+    });
+  }
+});
+</script>
+
+</body>
+</html>
