@@ -80,107 +80,24 @@ nav ul li a {
 </head>
 <body>
 <header>
-  <!-- Botão do menu para celular -->
-  <button id="menuToggle" style="position:absolute; top:15px; left:20px; z-index:2000; font-size:1.5em; background:none; border:none; cursor:pointer;">☰</button>
-
   <span id="siteTitle">Славянский клуб</span>
-  <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
-  <button id="languageToggle" style="margin-left:20px;">PT</button>
-
-  <!-- Botão de Login para Chat -->
-  <button id="loginBtn" style="margin: 10px; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; border: none;">
-    Login para Chat
-  </button>
-
-  <span id="welcomeUser" style="position:absolute; top:15px; right:20px; color:blue; font-weight:bold; display:none;"></span>
-</header>
-
-<!-- Menu -->
-<nav>
-    <ul>
-        <li><a href="#" onclick="saveChatState(); return false;">Перетаскивание</a></li>
-        <li><a href="crossword.html" onclick="saveChatState()">прогресс</a></li>
-        <li><a href="exercises.html" onclick="saveChatState()">упражнения</a></li>
-        <li><a href="jogoCores.html" onclick="saveChatState()">Игра Цвета</a></li>
-        <li><a href="#" onclick="saveChatState(); return false;">Кто мы</a></li>
-        <li><a href="contact.html" onclick="saveChatState()">Контакт</a></li>
-        <li><a href="#" onclick="abrirDicionario(); return false;">словáрь</a></li>
-    </ul>
+ 	 <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
+	 <button id="languageToggle" style="margin-left:20px;">PT</button>
+<button id="menu-toggle">☰</button> <!-- botão hamburger -->
+<nav id="sidebar">
+  <ul>
+    <li><a href="#">Перетаскивание</a></li>
+    ...
+  </ul>
 </nav>
 
-<style>
-/* Menu padrão */
-nav {
-  background-color: #eee;
-  padding: 10px;
-  z-index: 1500;
-}
+<!-- Botão de Login para Chat -->
+<button id="loginBtn" style="margin: 10px; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; border: none;">
+  Login para Chat
+</button>
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-  padding: 8px 12px;
-  display: block;
-}
-
-/* Menu oculto no celular */
-@media screen and (max-width: 768px) {
-  nav {
-    display: none; /* começa oculto */
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    background-color: #eee;
-    flex-direction: column;
-    padding: 10px 0;
-    z-index: 2000;
-  }
-
-  nav.show {
-    display: flex; /* quando o botão for clicado */
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-
-  nav ul li a {
-    padding: 12px 20px;
-    width: 100%;
-    text-align: center;
-  }
-}
-</style>
-
-<script>
-  const menuToggle = document.getElementById('menuToggle');
-  const nav = document.querySelector('nav');
-
-  menuToggle.addEventListener('click', () => {
-    nav.classList.toggle('show');
-  });
-
-  // Fecha menu ao clicar em um link (opcional)
-  const navLinks = document.querySelectorAll('nav ul li a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        nav.classList.remove('show');
-      }
-    });
-  });
-</script>
+<span id="welcomeUser" style="position:absolute; top:15px; right:20px; color:blue; font-weight:bold; display:none;"></span>
+</header>
 
 <script>
 // Textos em Russo e Português
@@ -865,6 +782,9 @@ function closeOverlay() {
 
 </script>
 
+<!-- BOTÃO PARA ABRIR DICIONÁRIO -->
+<button onclick="abrirDicionario()">Abrir Dicionário</button>
+
 <!-- OVERLAY MODAL -->
 <div id="overlayModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
     <div id="overlayBody" style="background:white; width:80%; max-width:700px; max-height:80%; padding:20px; border-radius:10px; overflow-y:auto; position:relative;">
@@ -1036,20 +956,13 @@ loginBtn.addEventListener('click', () => {
     <div id="overlayBody"></div>
   </div>
 </div>
-
 <script>
-  const menuToggle = document.getElementById('menuToggle');
-  const nav = document.querySelector('nav');
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
 
-  menuToggle.addEventListener('click', () => {
-    nav.classList.toggle('show');
-  });
-</script>
-
-	
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('show');
+    });
+  </script>
 </body>
 </html>
-
-
-
-
