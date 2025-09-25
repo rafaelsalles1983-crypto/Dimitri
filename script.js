@@ -1,3 +1,38 @@
+const sideMenu = document.getElementById('sideMenu');
+const closeMenuBtn = document.getElementById('closeMenuBtn');
+const openMenuBtn = document.getElementById('openMenuBtn');
+
+// Abrir menu
+openMenuBtn.addEventListener('click', () => {
+  if (window.innerWidth <= 768) {
+    sideMenu.classList.add('show');
+  } else {
+    sideMenu.style.display = 'block';
+  }
+  openMenuBtn.style.display = 'none'; // esconde botão abrir
+});
+
+// Fechar menu
+closeMenuBtn.addEventListener('click', () => {
+  if (window.innerWidth <= 768) {
+    sideMenu.classList.remove('show');
+  } else {
+    sideMenu.style.display = 'none';
+  }
+  openMenuBtn.style.display = 'block'; // mostra botão abrir
+});
+
+// Ajusta comportamento ao redimensionar a tela
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    sideMenu.style.display = 'block';
+    sideMenu.classList.remove('show');
+    openMenuBtn.style.display = 'none'; // menu fixo, não precisa botão
+  } else {
+    sideMenu.style.display = 'none';
+    openMenuBtn.style.display = 'block';
+  }
+});
 // script.js
 
 
