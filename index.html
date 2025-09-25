@@ -28,51 +28,29 @@
   const auth = firebase.auth();
 </script>
 
-<script>
-
-</script>
-
 <style>
-/* Aqui você mantém todo o seu CSS existente, mascote, chat, neon, lições bloqueadas, etc. */
-
-
-/* Menu horizontal padrão */
+/* ====== MENU ====== */
 nav {
   background-color: #eee;
-  padding: 10px 20px;
+  padding: 10px;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  flex-direction: row; /* horizontal */
-  justify-content: center; /* centraliza os itens */
-  gap: 20px; /* espaço entre os links */
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline-block;
+  gap: 15px;
+  margin:0; padding:0;
 }
 
 nav ul li a {
   text-decoration: none;
   color: #333;
-  font-weight: bold;
-  padding: 8px 12px;
-  transition: background 0.3s, color 0.3s;
 }
 
-nav ul li a:hover {
-  background-color: #ccc;
-  color: #000;
-}
-
-/* Responsivo: ainda pode esconder no celular */
+/* Menu oculto no celular */
 @media screen and (max-width: 768px) {
   nav {
-    display: none; /* começa oculto */
+    display: none;
     position: absolute;
     top: 60px;
     left: 0;
@@ -88,258 +66,57 @@ nav ul li a:hover {
   }
 
   nav.show {
-    display: block; /* quando o botão for clicado */
+    display: block;
   }
 }
 
-
-
-</style>
-</head>
-<body>
-<header>
-  <span id="siteTitle">Славянский клуб</span>
- 	 <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
-	 <button id="languageToggle" style="margin-left:20px;">PT</button>
-<button id="menu-toggle">☰</button> <!-- botão hamburger -->
-<nav id="sidebar">
-  <ul>
-    <li><a href="#">Перетаскивание</a></li>
-    ...
-  </ul>
-</nav>
-
-<!-- Botão de Login para Chat -->
-<button id="loginBtn" style="margin: 10px; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; border: none;">
-  Login para Chat
-</button>
-
-<span id="welcomeUser" style="position:absolute; top:15px; right:20px; color:blue; font-weight:bold; display:none;"></span>
-</header>
-
-<script>
-// Textos em Russo e Português
-const translations = {
-  ru: {
-    title: "Славянский клуб",
-    nav: {
-    drag: "Перетаскивание",
-    crossword: "Прогресс",
-    exercises: "Упражнения",
-    whoare: "Кто мы",
-    contact: "Контакт",
-    dictionary: "Словарь"
-},
-    lessons: [
-      "Притяжательные прилагательные",
-      "Числительные",
-      "Глагол \"ser\" (настоящее время)",
-      "Глагол \"estar\" (настоящее время)",
-      "Глагол \"ser\" (прошедшее время)",
-      "Глагол \"estar\" (прошедшее время)",
-      "Глагол \"ser\" (будущее время)",
-      "Глагол \"estar\" (будущее время)",
-      "Количественные выражения",
-      "Прямое дополнение",
-      "Настоящее время",
-      "Инфинитив",
-      "Описание мест",
-      "Профессии",
-      "Путешествия",
-      "Семья",
-      "Глаголы движения",
-      "Разговорные фразы"
-    ]
-  },
-  pt: {
-    title: "Clube Eslavo",
-  	nav: {
- 	 drag: "Arrastar",
- 	 crossword: "Progresso",
- 	 exercises: "Exercícios",
- 	 whoare: "Quem somos",
- 	 contact: "Contato",
- 	 dictionary: "Dicionário"
-},
-
-    lessons: [
-      "Adjetivos Possessivos",
-      "Numerais",
-      "Verbo \"ser\" (presente)",
-      "Verbo \"estar\" (presente)",
-      "Verbo \"ser\" (passado)",
-      "Verbo \"estar\" (passado)",
-      "Verbo \"ser\" (futuro)",
-      "Verbo \"estar\" (futuro)",
-      "Expressões Quantitativas",
-      "Objeto Direto",
-      "Tempo Presente",
-      "Infinitivo",
-      "Descrição de Lugares",
-      "Profissões",
-      "Viagens",
-      "Família",
-      "Verbos de Movimento",
-      "Frases de Conversação"
-    ]
-  }
-};
-
-let currentLang = 'ru';
-
-document.getElementById('languageToggle').addEventListener('click', () => {
-  currentLang = currentLang === 'ru' ? 'pt' : 'ru';
-  updateLanguage();
-});
-
-function updateLanguage() {
-  const lang = translations[currentLang];
-
-  // Título do site
-  document.getElementById('siteTitle').textContent = lang.title;
-
-  // Menu
-  const navLinks = document.querySelectorAll('nav ul li a');
-  navLinks[0].textContent = lang.nav.drag;
-  navLinks[1].textContent = lang.nav.crossword;
-  navLinks[2].textContent = lang.nav.exercises;
-
-  // Lessons
-  const lessonCards = document.querySelectorAll('.lesson-card');
-  lessonCards.forEach((card, index) => {
-    if(lang.lessons[index]) card.textContent = lang.lessons[index];
-  });
-
-  // Atualiza texto do botão
-  document.getElementById('languageToggle').textContent = currentLang === 'ru' ? 'PT' : 'RU';
-}
-
-// Inicializa idioma
-updateLanguage();
-</script>
-
-<nav>
-    <ul>
-        <li><a href="#" onclick="saveChatState(); return false;">Перетаскивание</a></li>
-        <li><a href="crossword.html" onclick="saveChatState()">прогресс</a></li>
-        <li><a href="exercises.html" onclick="saveChatState()">упражнения</a></li>
-        <li><a href="jogoCores.html" onclick="saveChatState()">Игра Цвета</a></li>
-  	<li><a href="#" onclick="saveChatState(); return false;">Кто мы</a></li>
-        <li><a href="contact.html" onclick="saveChatState()">Контакт</a></li>
-	<li><a href="#" onclick="abrirDicionario(); return false;">словáрь</a></li>
-    	</li>
-    </ul>
-</nav>
-
-<div id="progress-container">
-    <div id="progress-bar"></div>
-</div>
-
-<div id="overallProgress" class="progress-text">
-    Progresso: 0 de 18 módulos concluídos
-</div>
-
-
-<!-- Modal de progresso -->
-<div id="progressModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Progresso dos Exercícios</h2>
-    <div id="modalProgressText"></div>
-    <div id="modalProgressBarContainer">
-      <div id="modalProgressBar"></div>
-    </div>
-  </div>
-</div>		
-
-
-
-<div class="lesson-container">
-    <div class="lesson-card" data-key="possessivos">Притяжательные прилагательные</div>
-    <div class="lesson-card locked" data-key="numerais">Числительные</div>
-    <div class="lesson-card locked" data-key="verboSer">Глагол "ser" (настоящее время)</div>
-    <div class="lesson-card locked" data-key="verboEstar">Глагол "estar" (настоящее время)</div>
-    <div class="lesson-card locked" data-key="verboSerPassado">Глагол "ser" (прошедшее время)</div>
-    <div class="lesson-card locked" data-key="verboEstarPassado">Глагол "estar" (прошедшее время)</div>
-    <div class="lesson-card locked" data-key="verboSerFuturo">Глагол "ser" (будущее время)</div>
-    <div class="lesson-card locked" data-key="verboEstarFuturo">Глагол "estar" (будущее время)</div>
-    <div class="lesson-card locked" data-key="quantidades">Количественные выражения</div>
-    <div class="lesson-card locked" data-key="objetoDireto">Прямое дополнение</div>
-    <div class="lesson-card locked" data-key="tempoPresente">Настоящее время</div>
-    <div class="lesson-card locked" data-key="infinitivo">Инфинитив</div>
-    <div class="lesson-card locked" data-key="lugares">Описание мест</div>
-    <div class="lesson-card locked" data-key="profissoes">Профессии</div>
-    <div class="lesson-card locked" data-key="viagem">Путешествия</div>
-    <div class="lesson-card locked" data-key="familia">Семья</div>
-    <div class="lesson-card locked" data-key="verbosMovimento">Глаголы движения</div>
-    <div class="lesson-card locked" data-key="FrasesDeConvercacao">Разговорные фразы</div>   
-</div>
-
-<!-- Modal -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2 id="modalTitle"></h2>
-        <p id="modalPhrase" class="modal-phrase"></p>
-        <div id="livesContainer"></div>
-        <div id="wordBank"></div>
-        <div id="assembledPhrase"></div>
-        <div id="feedback"></div>
-        <div id="resultImage"></div>
-        <audio id="modalAudio" controls></audio>
-    </div>
-</div>
-
-
-
-
-
-
-<!-- Mascote Dimitri + Frase de Parabéns -->
-<div id="dimitri">
-  <div class="head">
-    <div class="ushanka">
-      <div class="ear left"></div>
-      <div class="ear right"></div>
-    </div>
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="eyebrow left"></div>
-    <div class="eyebrow right"></div>
-    <div class="mouth"></div>
-  </div>
-  <div class="body">
-    <div class="arm left"></div>
-    <div class="arm right"></div>
-  </div>
-</div>
-
-<div id="congratsMessage">Поздравления!</div>
-
-<style>
-/* Piscando neon */
-@keyframes neonBlink {
-  0%, 50%, 100% { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0, 0 0 40px #0f0; opacity:1; }
-  25%, 75% { text-shadow: none; opacity:0.6; }
-}
-
-#congratsMessage {
-  display:none;
-  font-size:3em;
-  font-weight:bold;
-  color:#0f0;
-  text-align:center;
-  margin-top:20px;
-  animation: neonBlink 1s infinite;
+/* ====== CHAT ====== */
+.chat-container {
   position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2000;
-  pointer-events: none;
+  bottom: 0;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1500;
 }
 
-/* Mascote */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+}
+
+.chat-message {
+  margin-bottom: 5px;
+}
+
+.chat-message.bot {
+  color: #0a0;
+}
+
+.chat-message.user {
+  color: #00a;
+}
+
+.avatar {
+  display: inline-block;
+  width: 20px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/* ====== MASCOTE ====== */
 #dimitri {
   position: fixed;
   bottom: 20px;
@@ -428,57 +205,63 @@ updateLanguage();
 #dimitri .arm.left { left: -15px; }
 #dimitri .arm.right { right: -15px; }
 
-/* Piscando olhos */
 @keyframes blink {
-  0%, 90%, 100% { height: 15px; }
-  95% { height: 2px; }
+  0%,90%,100% { height:15px; }
+  95% { height:2px; }
 }
 
-/* Acenando e pulso corpo */
 .acenando .arm.left { transform: rotate(-30deg); }
 .acenando .arm.right { transform: rotate(30deg); }
 .acenando .body { animation: pulse 0.3s infinite alternate; }
-.triste .mouth {
-  border-bottom: none;
-  border-top: 3px solid #000;
-  border-radius: 20px 20px 0 0;
-}
+.triste .mouth { border-bottom:none; border-top:3px solid #000; border-radius:20px 20px 0 0; }
 
-/* Pulso corpo */
 @keyframes pulse {
   0% { transform: scale(1); }
   100% { transform: scale(1.05); }
 }
 
-/* Neon do chapéu e corpo */
 .neon .body { animation: neonPulse 0.5s infinite alternate; }
 .neon .ushanka { animation: neonPulse 0.5s infinite alternate; }
 @keyframes neonPulse {
-  0% { background-color: #0055aa; box-shadow: none; }
-  50% { background-color: #0f0; box-shadow: 0 0 10px #0f0, 0 0 20px #0f0; }
-  100% { background-color: #0055aa; box-shadow: none; }
+  0% { background-color:#0055aa; box-shadow:none; }
+  50% { background-color:#0f0; box-shadow:0 0 10px #0f0,0 0 20px #0f0; }
+  100% { background-color:#0055aa; box-shadow:none; }
 }
 
-.lesson-card.locked {
-  pointer-events: none;
-  opacity: 0.5;
-  cursor: not-allowed;
+/* ====== CONGRATS ====== */
+@keyframes neonBlink {
+  0%,50%,100% { text-shadow:0 0 5px #0f0,0 0 10px #0f0,0 0 20px #0f0,0 0 40px #0f0; opacity:1; }
+  25%,75% { text-shadow:none; opacity:0.6; }
+}
+#congratsMessage {
+  display:none;
+  font-size:3em;
+  font-weight:bold;
+  color:#0f0;
+  text-align:center;
+  margin-top:20px;
+  animation: neonBlink 1s infinite;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 2000;
+  pointer-events:none;
 }
 
-/* Overlay geral */
+/* ====== MODALS E OVERLAYS ====== */
 .overlay {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.7);
   z-index: 3000;
   overflow-y: auto;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Conteúdo do overlay */
 .overlay-content {
   background: #fff;
   margin: 50px auto;
@@ -489,499 +272,215 @@ updateLanguage();
   position: relative;
 }
 
-/* Botão fechar */
 .overlay .close-btn {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 10px; right: 15px;
   font-size: 28px;
   font-weight: bold;
   color: #333;
   cursor: pointer;
   transition: color 0.3s;
 }
-.overlay .close-btn:hover {
-  color: #000;
+.overlay .close-btn:hover { color:#000; }
+
+.lesson-card.locked {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
+/* ====== PROGRESS ====== */
+#progress-container { width: 90%; height: 20px; background:#ddd; margin:10px auto; border-radius:10px; }
+#progress-bar { width:0; height:100%; background:#4caf50; border-radius:10px; }
+.progress-text { text-align:center; margin-bottom:10px; }
 
-
+/* ====== LIÇÕES ====== */
+.lesson-container { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:20px 0; }
+.lesson-card { background:#f0f0f0; padding:15px; border-radius:10px; cursor:pointer; min-width:150px; text-align:center; }
 </style>
 
-<script>
-const dimitri = document.getElementById('dimitri');
-const congratsMessage = document.getElementById('congratsMessage');
+</head>
+<body>
+<header>
+  <span id="siteTitle">Славянский клуб</span>
+  <a href="#" id="logoutBtn" class="btn" style="opacity:0; transition:opacity 0.5s;">Sair</a>
+  <button id="languageToggle" style="margin-left:20px;">PT</button>
+  <button id="menu-toggle">☰</button>
+</header>
 
-function dimitriAcena() {
-  dimitri.classList.add('acenando');
-  dimitri.classList.remove('triste');
-  setTimeout(()=> dimitri.classList.remove('acenando'), 1200);
-}
+<!-- SIDEBAR MENU -->
+<nav id="sidebar">
+  <ul>
+    <li><a href="#">Перетаскивание</a></li>
+    <li><a href="crossword.html">Прогресс</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="jogoCores.html">Игра Цвета</a></li>
+    <li><a href="#">Кто мы</a></li>
+    <li><a href="contact.html">Контакт</a></li>
+    <li><a href="#" onclick="abrirDicionario(); return false;">Словáрь</a></li>
+  </ul>
+</nav>
 
-function dimitriTriste() {
-  dimitri.classList.add('triste');
-  setTimeout(()=> dimitri.classList.remove('triste'), 1200);
-}
+<!-- PROGRESSO -->
+<div id="progress-container">
+    <div id="progress-bar"></div>
+</div>
+<div id="overallProgress" class="progress-text">
+    Progresso: 0 de 18 módulos concluídos
+</div>
 
-function dimitriNeonCelebration() {
-  // Adiciona neon
-  dimitri.classList.add('neon');
-  congratsMessage.style.display = 'block';
-  
-  // Garante que animação seja aplicada
-  const body = dimitri.querySelector('.body');
-  const ushanka = dimitri.querySelector('.ushanka');
-  body.style.animation = 'neonPulse 0.5s infinite alternate';
-  ushanka.style.animation = 'neonPulse 0.5s infinite alternate';
-  
-  setTimeout(() => {
-    dimitri.classList.remove('neon');
-    congratsMessage.style.display = 'none';
-    body.style.animation = '';
-    ushanka.style.animation = '';
-  }, 4000);
-}
+<!-- LIÇÕES -->
+<div class="lesson-container">
+    <div class="lesson-card" data-key="possessivos">Притяжательные прилагательные</div>
+    <div class="lesson-card locked" data-key="numerais">Числительные</div>
+    <div class="lesson-card locked" data-key="verboSer">Глагол "ser" (настоящее время)</div>
+    <div class="lesson-card locked" data-key="verboEstar">Глагол "estar" (настоящее время)</div>
+    <div class="lesson-card locked" data-key="verboSerPassado">Глагол "ser" (прошедшее время)</div>
+    <div class="lesson-card locked" data-key="verboEstarPassado">Глагол "estar" (прошедшее время)</div>
+    <div class="lesson-card locked" data-key="verboSerFuturo">Глагол "ser" (будущее время)</div>
+    <div class="lesson-card locked" data-key="verboEstarFuturo">Глагол "estar" (будущее время)</div>
+    <div class="lesson-card locked" data-key="quantidades">Количественные выражения</div>
+    <div class="lesson-card locked" data-key="objetoDireto">Прямое дополнение</div>
+    <div class="lesson-card locked" data-key="tempoPresente">Настоящее время</div>
+    <div class="lesson-card locked" data-key="infinitivo">Инфинитив</div>
+    <div class="lesson-card locked" data-key="lugares">Описание мест</div>
+    <div class="lesson-card locked" data-key="profissoes">Профессии</div>
+    <div class="lesson-card locked" data-key="viagem">Путешествия</div>
+    <div class="lesson-card locked" data-key="familia">Семья</div>
+    <div class="lesson-card locked" data-key="verbosMovimento">Глаголы движения</div>
+    <div class="lesson-card locked" data-key="FrasesDeConvercacao">Разговорные фразы</div>   
+</div>
 
-</script>
+<!-- MASCOTE -->
+<div id="dimitri">
+  <div class="head">
+    <div class="ushanka">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+    </div>
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="eyebrow left"></div>
+    <div class="eyebrow right"></div>
+    <div class="mouth"></div>
+  </div>
+  <div class="body">
+    <div class="arm left"></div>
+    <div class="arm right"></div>
+  </div>
+</div>
+<div id="congratsMessage">Поздравления!</div>
 
-
-
-
-<script>
-
-
-
-
-// Função desbloqueia próximo módulo
-function unlockNextModule(currentKey) {
-    const cards = document.querySelectorAll('.lesson-card');
-    for (let i = 0; i < cards.length; i++) {
-        if (cards[i].dataset.key === currentKey && i < cards.length - 1) {
-            cards[i + 1].classList.remove('locked');
-            break;
-        }
-    }
-}
-
-
-
-// Exemplo de integração com o seu quiz:
-// se o usuário completar a seção com sucesso (percent>=70):
-// dimitriNeonCelebration();
-</script>
-
-
-
+<!-- CHAT -->
 <div id="chat-container" class="chat-container">
   <div id="chat-messages" class="chat-messages"></div>
   <div class="chat-input-container">
-    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." />
+    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
     <button id="chat-send">Enviar</button>
   </div>
 </div>
 
+<!-- OVERLAY PARA EXERCICIOS -->
+<div id="overlayExerciseModal" class="overlay">
+  <div class="overlay-content">
+    <span class="close-btn" onclick="closeOverlay('overlayExerciseModal')">&times;</span>
+    <div id="exerciseContent"></div>
+  </div>
+</div>
 
+<!-- OVERLAY PARA DICIONÁRIO -->
+<div id="overlayDictionaryModal" class="overlay">
+  <div class="overlay-content">
+    <span class="close-btn" onclick="closeOverlay('overlayDictionaryModal')">&times;</span>
+    <div id="dictionaryContent"></div>
+  </div>
+</div>
 
 <script>
-function addMessage(message, sender) {
-    const container = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = 'chat-message ' + sender;
+/* ====== MENU MOBILE ====== */
+const menuToggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+menuToggle.addEventListener('click', () => sidebar.classList.toggle('show'));
 
-    if(sender === 'bot'){
-        const avatar = document.createElement('div');
-        avatar.className = 'avatar';
-        avatar.textContent = 'B';
-        div.appendChild(avatar);
-    }
-
-    const text = document.createElement('div');
-    text.textContent = message;
-    div.appendChild(text);
-
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
+/* ====== DICIONARIO ====== */
+function abrirDicionario() {
+  document.getElementById('overlayDictionaryModal').style.display = 'flex';
+  document.getElementById('dictionaryContent').innerHTML = '<h2>Dicionário Russo-Português</h2><p>Aqui você pode pesquisar palavras...</p>';
 }
 
+function closeOverlay(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
 
+/* ====== CHAT ====== */
+const chatContainer = document.getElementById('chat-container');
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send');
 
-
-
-
-// Envio de mensagem
-document.getElementById('chat-send').addEventListener('click', () => {
-    const input = document.getElementById('chat-input');
-    const msg = input.value.trim();
-    if(msg === '') return;
-    addMessage(msg, 'user');
-    input.value = '';
-    setTimeout(() => {
-        addMessage("🤖 Resposta automática: " + msg, 'bot');
-    }, 600);
-});
-
-// Envio com Enter
-document.getElementById('chat-input').addEventListener('keypress', e => {
-    if(e.key === 'Enter') document.getElementById('chat-send').click();
-});
-</script>
-
-
-
-
-<script>
-const chatMessages = document.getElementById("chat-messages");
-const chatInput = document.getElementById("chat-input");
-const chatSend = document.getElementById("chat-send");
-
-function addMessage(text, sender="user") {
-  const msg = document.createElement("div");
-  msg.className = "chat-message " + sender;
-  if (sender === "bot") {
-    const avatar = document.createElement("div");
-    avatar.className = "avatar";
-    avatar.textContent = "AI";
-    msg.appendChild(avatar);
-  }
-  const span = document.createElement("span");
-  span.textContent = text;
-  msg.appendChild(span);
-  chatMessages.appendChild(msg);
+function addMessage(sender, text) {
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('chat-message', sender);
+  msgDiv.innerHTML = `<span class="avatar">${sender === 'bot' ? '🤖' : '👤'}</span> ${text}`;
+  chatMessages.appendChild(msgDiv);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-chatSend.addEventListener("click", async () => {
+chatSend.addEventListener('click', () => {
   const text = chatInput.value.trim();
   if (!text) return;
+  addMessage('user', text);
+  chatInput.value = '';
+  setTimeout(() => addMessage('bot', 'Ответ бота: ' + text), 800);
+});
 
-  addMessage(text, "user");
-  chatInput.value = "";
-
-  // Envia para o Flask
-  const res = await fetch("/chat", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({message: text})
+/* ====== LIÇÕES ====== */
+const lessonCards = document.querySelectorAll('.lesson-card');
+lessonCards.forEach(card => {
+  card.addEventListener('click', () => {
+    if(card.classList.contains('locked')) return;
+    document.getElementById('exerciseContent').innerHTML = `<h2>${card.textContent}</h2><p>Conteúdo da lição...</p>`;
+    document.getElementById('overlayExerciseModal').style.display = 'flex';
   });
-  const data = await res.json();
-  addMessage(data.reply, "bot");
 });
-</script>
 
+/* ====== PROGRESSO ====== */
+let totalModules = lessonCards.length;
+let completedModules = 0;
 
-<!-- SCRIPTS finais -->
+function updateProgress() {
+  const progressBar = document.getElementById('progress-bar');
+  const progressText = document.getElementById('overallProgress');
+  const progressPercent = (completedModules / totalModules) * 100;
+  progressBar.style.width = progressPercent + '%';
+  progressText.textContent = `Progresso: ${completedModules} de ${totalModules} módulos concluídos`;
 
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    // Monitora login/logout
-    auth.onAuthStateChanged(user => {
-  if (user) {
-    logoutBtn.style.display = 'inline-block';
-    logoutBtn.style.opacity = '1';   // <-- torna visível
-  } else {
-    logoutBtn.style.display = 'none';
-    logoutBtn.style.opacity = '0';
+  if (completedModules === totalModules) {
+    document.getElementById('congratsMessage').style.display = 'block';
+    setTimeout(() => document.getElementById('congratsMessage').style.display = 'none', 5000);
   }
-});
+}
 
-
-    // Ação de logout
-    logoutBtn.addEventListener('click', () => {
-      auth.signOut().then(() => {
-        localStorage.removeItem('redirectAfterLogin');
-        window.location.href = 'index.html';
-      });
-    });
-
-    // --- chat ---
-    const chatSend = document.getElementById('chat-send');
-    const chatInput = document.getElementById('chat-input');
-
-    // Desabilita chat se não logado
-    auth.onAuthStateChanged(user => {
-      if (!user) {
-        chatInput.disabled = true;
-        chatInput.placeholder = "🔒 Faça login para responder...";
-        chatSend.disabled = true;
-        chatSend.style.opacity = "0.5";
-        chatSend.style.cursor = "not-allowed";
-      } else {
-        chatInput.disabled = false;
-        chatInput.placeholder = "Digite sua mensagem...";
-        chatSend.disabled = false;
-        chatSend.style.opacity = "1";
-        chatSend.style.cursor = "pointer";
-      }
-    });
-
-    // Envio do chat (só se logado)
-    chatSend.addEventListener('click', async () => {
-      const text = chatInput.value.trim();
-      if (!text) return;
-
-      const user = auth.currentUser;
-      if (!user) {
-        localStorage.setItem('redirectAfterLogin', 'index.html');
-        alert('Você precisa estar logado para usar o chat.');
-        window.location.href = 'login.html';
-        return;
-      }
-
-      addMessage(text, 'user');
-      chatInput.value = '';
-
-      try {
-        const res = await fetch('/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          addMessage(data.reply || 'Sem resposta do servidor.', 'bot');
-        } else {
-          addMessage('Erro no servidor: ' + res.status, 'bot');
-        }
-      } catch (err) {
-        addMessage('🤖 Resposta automática (offline): ' + text, 'bot');
-      }
-    });
-
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') chatSend.click();
-    });
+// Exemplo: desbloqueia próximo módulo ao clicar
+lessonCards.forEach((card, i) => {
+  card.addEventListener('click', () => {
+    if (!card.classList.contains('locked')) {
+      card.classList.add('completed');
+      completedModules++;
+      if(i+1 < lessonCards.length) lessonCards[i+1].classList.remove('locked');
+      updateProgress();
+    }
   });
-</script>
+});
 
-
-
-<script>
-// Adiciona clique para abrir exercício no overlay
-document.addEventListener('DOMContentLoaded', () => {
-    const lessonCards = document.querySelectorAll('.lesson-card:not(.locked)');
-    
-    lessonCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const key = card.dataset.key;
-            // Define o URL do exercício baseado no key
-            const url = key + '.html'; // Ex.: possessivos.html, numerais.html
-            openOverlay(url);
-        });
-    });
+/* ====== LANGUAGE TOGGLE ====== */
+const langToggle = document.getElementById('languageToggle');
+let currentLang = 'ru';
+langToggle.addEventListener('click', () => {
+  currentLang = currentLang === 'ru' ? 'pt' : 'ru';
+  langToggle.textContent = currentLang.toUpperCase() === 'PT' ? 'RU' : 'PT';
+  // Aqui poderia atualizar textos da página
 });
 </script>
-
-
-
-<script src="script.js"></script>
-
-<script>
-function openOverlay(url) {
-    const overlay = document.getElementById('overlayModal');
-    const content = document.getElementById('overlayBody');
-
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            content.innerHTML = html;
-            overlay.style.display = 'block';
-        })
-        .catch(err => console.error('Erro ao carregar overlay:', err));
-}
-
-function closeOverlay() {
-    const overlay = document.getElementById('overlayModal');
-    overlay.style.display = 'none';
-    document.getElementById('overlayBody').innerHTML = '';
-}
-
-</script>
-
-<!-- BOTÃO PARA ABRIR DICIONÁRIO -->
-<button onclick="abrirDicionario()">Abrir Dicionário</button>
-
-<!-- OVERLAY MODAL -->
-<div id="overlayModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
-    <div id="overlayBody" style="background:white; width:80%; max-width:700px; max-height:80%; padding:20px; border-radius:10px; overflow-y:auto; position:relative;">
-        <button onclick="fecharDicionario()" style="position:absolute; top:10px; right:10px; background:red; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Fechar</button>
-        <!-- O conteúdo do dicionário será injetado aqui -->
-    </div>
-</div>
-
-<script>
-function abrirDicionario() {
-    const overlay = document.getElementById('overlayModal');
-    const content = document.getElementById('overlayBody');
-
-    content.innerHTML = `
-        <button onclick="fecharDicionario()" style="position:absolute; top:10px; right:10px; background:red; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Fechar</button>
-
-        <h2>Словáрь — Dicionário Russo-Português</h2>
-
-        <h3>1. Cumprimentos e Expressões Básicas</h3>
-        <ul>
-            <li>Привет — Olá</li>
-            <li>Доброе утро — Bom dia</li>
-            <li>Добрый день — Boa tarde</li>
-            <li>Добрый вечер — Boa noite</li>
-            <li>Пока — Tchau</li>
-            <li>До свидания — Adeus</li>
-            <li>Пожалуйста — Por favor</li>
-            <li>Спасибо — Obrigado</li>
-            <li>Большое спасибо — Muito obrigado</li>
-            <li>Извините — Desculpe</li>
-            <li>Прошу прощения — Peço desculpa</li>
-            <li>Ничего — De nada</li>
-            <li>Как дела? — Como vai?</li>
-            <li>Хорошо — Bem</li>
-            <li>Плохо — Mal</li>
-            <li>Так себе — Mais ou menos</li>
-            <li>Рад тебя видеть — Prazer em ver você</li>
-            <li>Приятно познакомиться — Prazer em conhecer</li>
-            <li>Добро пожаловать — Bem-vindo</li>
-            <li>Спокойной ночи — Boa noite (ao se despedir)</li>
-        </ul>
-
-        <h3>2. Perguntas Comuns</h3>
-        <ul>
-            <li>Что это? — O que é isto?</li>
-            <li>Кто это? — Quem é?</li>
-            <li>Где туалет? — Onde fica o banheiro?</li>
-            <li>Сколько стоит? — Quanto custa?</li>
-            <li>Когда? — Quando?</li>
-            <li>Почему? — Por que?</li>
-            <li>Как? — Como?</li>
-            <li>Кто? — Quem?</li>
-            <li>Что случилось? — O que aconteceu?</li>
-            <li>Вы говорите по-русски? — Você fala russo?</li>
-            <li>Вы говорите по-португальски? — Você fala português?</li>
-            <li>Можете помочь? — Pode ajudar?</li>
-            <li>Что вы посоветуете? — O que você recomenda?</li>
-            <li>Где я могу найти…? — Onde posso encontrar…?</li>
-            <li>Сколько времени? — Que horas são?</li>
-            <li>Как пройти к…? — Como chegar a…?</li>
-            <li>Можно ли…? — É possível…?</li>
-            <li>Какая цена? — Qual é o preço?</li>
-            <li>Можно ли платить картой? — Posso pagar com cartão?</li>
-            <li>Есть ли здесь Wi-Fi? — Há Wi-Fi aqui?</li>
-        </ul>
-
-        <h3>3. Números Básicos</h3>
-        <ul>
-            <li>Один — Um</li>
-            <li>Два — Dois</li>
-            <li>Три — Três</li>
-            <li>Четыре — Quatro</li>
-            <li>Пять — Cinco</li>
-            <li>Шесть — Seis</li>
-            <li>Семь — Sete</li>
-            <li>Восемь — Oito</li>
-            <li>Девять — Nove</li>
-            <li>Десять — Dez</li>
-            <li>Одиннадцать — Onze</li>
-            <li>Двенадцать — Doze</li>
-            <li>Тринадцать — Treze</li>
-            <li>Четырнадцать — Quatorze</li>
-            <li>Пятнадцать — Quinze</li>
-            <li>Шестнадцать — Dezesseis</li>
-            <li>Семнадцать — Dezessete</li>
-            <li>Восемнадцать — Dezoito</li>
-            <li>Девятнадцать — Dezenove</li>
-            <li>Двадцать — Vinte</li>
-        </ul>
-
-        <h3>4. Cores</h3>
-        <ul>
-            <li>Красный — Vermelho</li>
-            <li>Синий — Azul</li>
-            <li>Зелёный — Verde</li>
-            <li>Жёлтый — Amarelo</li>
-            <li>Чёрный — Preto</li>
-            <li>Белый — Branco</li>
-            <li>Серый — Cinza</li>
-            <li>Оранжевый — Laranja</li>
-            <li>Фиолетовый — Roxo</li>
-            <li>Розовый — Rosa</li>
-            <li>Коричневый — Marrom</li>
-            <li>Голубой — Azul claro</li>
-            <li>Тёмно-синий — Azul escuro</li>
-            <li>Бежевый — Bege</li>
-            <li>Бирюзовый — Turquesa</li>
-            <li>Лаймовый — Verde limão</li>
-            <li>Золотой — Dourado</li>
-            <li>Серебряный — Prateado</li>
-            <li>Бордовый — Bordô</li>
-            <li>Малиновый — Framboesa</li>
-        </ul>
-
-        <h3>5. Frases Úteis no Dia a Dia</h3>
-        <ul>
-            <li>Я не понимаю — Não entendo</li>
-            <li>Говорите медленнее — Fale mais devagar</li>
-            <li>Повторите, пожалуйста — Repita, por favor</li>
-            <li>Можете помочь? — Pode ajudar?</li>
-            <li>Я хочу… — Eu quero…</li>
-            <li>Где находится…? — Onde fica…?</li>
-            <li>Как добраться до…? — Como chegar a…?</li>
-            <li>Можно ли…? — É possível…?</li>
-            <li>Я потерялся — Estou perdido</li>
-            <li>Сколько стоит? — Quanto custa?</li>
-            <li>Можно оплатить картой? — Posso pagar com cartão?</li>
-            <li>Есть ли здесь Wi-Fi? — Tem Wi-Fi aqui?</li>
-            <li>Я забронировал — Eu reservei</li>
-            <li>Можете рекомендовать ресторан? — Pode recomendar um restaurante?</li>
-            <li>Я вегетарианец — Sou vegetariano</li>
-            <li>Мне нужна помощь — Preciso de ajuda</li>
-            <li>Где ближайшая аптека? — Onde fica a farmácia mais próxima?</li>
-            <li>Я не говорю по-португальски — Não falo português</li>
-            <li>Как это называется? — Como se chama isso?</li>
-            <li>Можно ли мне меню, пожалуйста? — Posso ver o cardápio, por favor?</li>
-        </ul>
-    `;
-
-    overlay.style.display = 'flex';
-}
-
-function fecharDicionario() {
-    document.getElementById('overlayModal').style.display = 'none';
-}
-</script>
-
-<script>
-const loginBtn = document.getElementById('loginBtn');
-
-loginBtn.addEventListener('click', () => {
-  const user = auth.currentUser;
-  if (!user) {
-    // Armazena a página atual para redirecionar após login
-    localStorage.setItem('redirectAfterLogin', 'index.html');
-    window.location.href = 'login.html';
-  } else {
-    alert('Você já está logado e pode usar o chat!');
-  }
-});
-</script>
-
-
-
-<!-- Modal de sobreposição -->
-<div id="overlayModal" class="overlay">
-  <div class="overlay-content">
-    <span class="close-btn" onclick="closeOverlay()">&times;</span>
-    <div id="overlayBody"></div>
-  </div>
-</div>
-<script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-
-    menuToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('show');
-    });
-  </script>
 </body>
 </html>
-
