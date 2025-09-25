@@ -1,3 +1,966 @@
+/* ====== Estilo Geral ====== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+header {
+    background: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+/* ====== Botão Abrir Menu ====== */
+#openMenuBtn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2000;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#openMenuBtn:hover {
+    background-color: #45a049;
+}
+
+/* ====== Menu Lateral ====== */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 220px;
+    background-color: #4CAF50;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    z-index: 1500;
+    transition: transform 0.3s ease;
+}
+
+/* Botão Fechar Menu */
+#closeMenuBtn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+#closeMenuBtn:hover {
+    background-color: #d32f2f;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #45a049;
+}
+
+/* ====== Conteúdo Principal ====== */
+.main-content {
+    margin-left: 240px; /* espaço para o menu */
+    padding: 20px;
+}
+
+/* ====== Responsividade ====== */
+@media screen and (max-width: 768px) {
+    nav {
+        transform: translateX(-100%);
+        width: 100%;
+    }
+    nav.show {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  height: 100vh;              /* ocupa 100% da tela */
+  overflow: hidden;           /* sem scroll no body */
+  display: flex;
+  flex-direction: column;     /* organiza header, nav e conteúdo */
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 2em;
+  flex-shrink: 0;
+}
+
+nav {
+  background-color: #333;
+  flex-shrink: 0;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+nav li { flex: 1; }
+nav a {
+  display: block;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+nav a:hover, nav a.active {
+  background-color: #111;
+  font-weight: bold;
+}
+
+
+nav ul li a {
+  cursor: pointer;
+  color: #fff; /* ou outra cor */
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+nav ul li a:hover {
+  color: #ffcc00; /* destaque quando passar o mouse */
+}
+
+
+
+
+/* Container fixo com rolagem interna */
+.lesson-container {
+  flex: 1;                       /* ocupa o restante da tela */
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2 colunas */
+  grid-template-rows: repeat(2, 1fr);    /* 3 linhas */
+  gap: 15px;
+  overflow-y: auto;              /* scroll só aqui */
+  padding: 5px;
+}
+
+/* Cartões dos exercícios */
+.lesson-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lesson-card:hover {
+  transform: scale(1.05);
+  background-color: #e0ffe0;
+}
+.lesson-card.completed {
+  background-color: #d4edda !important;
+  border: 2px solid #28a745;
+  font-weight: bold;
+}
+
+
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 1000; overflow:auto; }
+.modal-content { background:#fff; margin:50px auto; padding:20px; border-radius:8px; max-width:700px; position:relative; text-align:center; }
+.close-btn { position:absolute; top:10px; right:15px; font-size:25px; cursor:pointer; }
+.word { padding:10px 15px; background:#4CAF50; color:white; border-radius:5px; cursor:pointer; display:inline-block; }
+.word:hover { background:#45a049; }
+#assembledPhrase, #feedback { margin-top:10px; font-weight:bold; font-size:1.2em; }
+#wordBank { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:15px; }
+#resultImage { margin-top:15px; }
+
+/* Neon blinking message */
+@keyframes neonBlink {
+  0%,50%,100%{text-shadow:0 0 5px #0f0,0 0 10px #0f0,0 0 20px #0f0; opacity:1;}
+  25%,75%{text-shadow:none; opacity:0.6;}
+}
+#congratsMessage { display:none; font-size:3em; font-weight:bold; color:#0f0; text-align:center; margin-top:20px; animation:neonBlink 1s infinite; }
+
+/* Hearts for lives */
+#livesContainer { margin-top:15px; }
+.heart { display:inline-block; font-size:2em; margin:0 3px; transition: transform 0.2s, opacity 0.3s; }
+.heart.lost { opacity:0.2; transform:scale(0.8); }
+
+/* Progress bar */
+#progress-container { width: 90%; height: 25px; background:#ddd; border-radius:12px; margin: 20px auto; }
+#progress-bar { width:0; height:100%; background:#4CAF50; border-radius:12px; transition:width 0.5s ease; }
+.progress-text { text-align:center; font-weight:bold; margin-top:10px; }
+
+/* Responsividade */
+@media(max-width:768px){
+    header { font-size:1.5em; padding:15px; }
+    nav ul { flex-direction:column; }
+    .lesson-container { flex-direction:column; margin:10px; padding:5px; }
+    .lesson-card { flex:1 1 auto; padding:15px; font-size:1em; }
+    .modal-content { width:90%; margin:30px auto; padding:15px; }
+    #modalPhrase { font-size:1.4em; }
+    #assembledPhrase { font-size:1em; }
+    #wordBank .word { padding:8px 10px; font-size:0.9em; }
+    #congratsMessage { font-size:2em; top:35%; }
+}
+
+/* Dimitri placeholder */
+#dimitri { width:120px; height:180px; position:fixed; bottom:10px; right:10px; background: url('dimitri.png') no-repeat center/contain; }
+
+
+
+
+
+    .main-content {
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 1200px;
+    }
+
+    .content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column {
+        width: 48%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .word {
+        padding: 10px;
+        background: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        cursor: grab;
+        text-align: center;
+        user-select: none;
+        min-width: 150px;
+    }
+
+    .placeholder {
+        padding: 10px;
+        background: #f0f0f0;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .correct { background: #4CAF50 !important; color: white; }
+    .wrong { background: #f44336 !important; color: white; }
+
+    .feedback {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    /* Barra de progresso */
+    #progressContainer { margin-bottom: 5px; }
+    #progressText { margin-bottom: 5px; font-weight: bold; }
+    #progressBarContainer {
+        background: #ccc;
+        width:100%;
+        height: 20px;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    #progressBar {
+        height: 100%;
+        width: 0%;
+        background: #4CAF50;
+        transition: width 0.3s;
+    }
+
+    /* Botão simétrico */
+    #checkBtn {
+        padding: 10px 20px;
+        font-size: 1em;
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+        min-width: 150px;
+        text-align: center;
+    }
+
+    #checkBtn:hover {
+        background-color: #1976D2;
+    }
+
+
+
+/* Overlay tela cheia */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85); /* fundo escuro translúcido */
+    z-index: 9999;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Conteúdo centralizado */
+.overlay-content {
+    background: #fff;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    min-height: 100px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    animation: slideUp 0.3s ease-in-out;
+}
+
+/* Botão de fechar (X) */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-btn:hover {
+    color: #ff5555;
+}
+
+/* Animações suaves */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+
+
+
+
+
+
+/* ====== Estilos Globais ====== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+}
+
+header {
+  background: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+/* Menu lateral */
+nav {
+  position: fixed;       /* Fixa o menu na lateral */
+  top: 0;                /* Começa do topo */
+  left: 0;               /* Alinha à esquerda */
+  height: 100%;          /* Ocupa toda a altura da tela */
+  width: 200px;          /* Largura do menu */
+  background: #4CAF50;   /* Cor de fundo do menu */
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Sombra lateral */
+  z-index: 1000;         /* Fica acima de outros elementos */
+}
+
+nav ul {
+  list-style: none;           /* Remove marcadores */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;     /* Links na vertical */
+  gap: 10px;                  /* Espaçamento entre links */
+}
+
+nav ul li a,
+nav ul li button {
+  display: block;
+  text-decoration: none;
+  padding: 12px 20px;
+  color: white;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li button:hover {
+  background: #45a049;
+}
+
+/* Progress Bar */
+#progress-container {
+  width: 90%;
+  height: 20px;
+  background: #ccc;
+  margin: 20px auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #4CAF50;
+  transition: 0.5s;
+}
+
+.progress-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Lição Cards */
+.lesson-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 90%;
+  margin: 0 auto 40px;
+}
+
+.lesson-card {
+  flex: 1 1 200px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  cursor: pointer;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.lesson-card:hover {
+  transform: translateY(-3px);
+}
+
+.lesson-card.locked {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal & Overlay */
+.modal,
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.modal-content,
+.overlay-content {
+  background: #fff;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 900px;
+  position: relative;
+}
+
+.close,
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close-btn:hover {
+  color: #000;
+}
+
+/* Mascote Dimitri */
+#dimitri {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+  height: 180px;
+  z-index: 1000;
+}
+
+#dimitri .head {
+  width: 80px;
+  height: 80px;
+  background: #ffcc99;
+  border-radius: 50%;
+  margin: 0 auto;
+  position: relative;
+  border: 2px solid #333;
+}
+
+.ushanka {
+  width: 100%;
+  height: 30px;
+  background: #800000;
+  position: absolute;
+  top: -10px;
+  border-radius: 50% 50% 0 0;
+}
+
+.ushanka .ear {
+  width: 20px;
+  height: 20px;
+  background: #800000;
+  position: absolute;
+  top: 10px;
+  border-radius: 50%;
+}
+
+.ushanka .ear.left { left: -10px; }
+.ushanka .ear.right { right: -10px; }
+
+#dimitri .eye {
+  width: 15px;
+  height: 15px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 25px;
+  animation: blink 4s infinite;
+}
+
+#dimitri .eye.left { left: 18px; }
+#dimitri .eye.right { right: 18px; }
+
+@keyframes blink { 0%,90%,100% { height: 15px; } 95% { height: 2px; } }
+
+#dimitri .eyebrow {
+  width: 18px;
+  height: 3px;
+  background: #333;
+  position: absolute;
+  top: 18px;
+}
+
+#dimitri .eyebrow.left { left: 15px; transform: rotate(-10deg); }
+#dimitri .eyebrow.right { right: 15px; transform: rotate(10deg); }
+
+#dimitri .mouth {
+  width: 40px;
+  height: 10px;
+  border-bottom: 3px solid #000;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 0.3s;
+}
+
+#dimitri .body {
+  width: 70px;
+  height: 80px;
+  background: #0055aa;
+  margin: 0 auto;
+  top: 10px;
+  position: relative;
+  border-radius: 10px;
+}
+
+#dimitri .arm {
+  width: 15px;
+  height: 50px;
+  background: #0055aa;
+  position: absolute;
+  top: 10px;
+  border-radius: 10px;
+  transform-origin: top center;
+  transition: transform 0.3s;
+}
+
+#dimitri .arm.left { left: -15px; }
+#dimitri .arm.right { right: -15px; }
+
+/* Mascote Animações */
+.acenando .arm.left { transform: rotate(-30deg); }
+.acenando .arm.right { transform: rotate(30deg); }
+.acenando .body { animation: pulse 0.3s infinite alternate; }
+.triste .mouth { border-bottom: none; border-top: 3px solid #000; border-radius: 20px 20px 0 0; }
+
+@keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+
+
+
+@keyframes neonPulse { 0% { background-color: #0055aa; box-shadow: none; } 50% { background-color: #0f0; box-shadow: 0 0 10px #0f0, 0 0 20px #0f0; } 100% { background-color: #0055aa; box-shadow: none; } }
+
+@keyframes neonBlink { 0%,50%,100% { text-shadow: 0 0 5px #0f0,0 0 10px #0f0,0 0 20px #0f0,0 0 40px #0f0; opacity:1; } 25%,75% { text-shadow: none; opacity: 0.6; } }
+
+#congratsMessage {
+  display: none;
+  font-size: 3em;
+  font-weight: bold;
+  color: #0f0;
+  text-align: center;
+  margin-top: 20px;
+  animation: neonBlink 1s infinite;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  pointer-events: none;
+}
+
+/* Chat */
+.chat-container {
+  width: 90%;
+  max-width: 900px;
+  height: 180px;
+  margin: 20px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  background: #fdfdfd;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  scroll-behavior: smooth;
+}
+
+.chat-message {
+  max-width: 70%;
+  padding: 12px 18px;
+  border-radius: 20px;
+  word-wrap: break-word;
+  font-size: 1em;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: appear 0.3s forwards;
+}
+
+.chat-message.user {
+  background: #4CAF50;
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+  justify-content: flex-end;
+}
+
+.chat-message.bot {
+  background: #e0e0e0;
+  color: #333;
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.chat-message.bot .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #4CAF50;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+@keyframes appear { to { opacity:1; transform: translateY(0); } }
+
+.chat-input-container {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  font-size: 1em;
+}
+
+#chat-send {
+  padding: 12px 20px;
+  border: none;
+  margin-left: 10px;
+  background: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+
+#chat-send:hover { background: #45a049; }
+
+.chat-messages::-webkit-scrollbar { width: 8px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.25); border-radius: 4px; }
+
+
+
+
+
+/* ====== Mascote Dimitri ====== */
+#dimitri {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+  height: 180px;
+  z-index: 1000;
+}
+
+#dimitri .head {
+  width: 80px;
+  height: 80px;
+  background: #ffcc99;
+  border-radius: 50%;
+  margin: 0 auto;
+  position: relative;
+  border: 2px solid #333;
+}
+
+.ushanka {
+  width: 100%;
+  height: 30px;
+  background: #800000;
+  position: absolute;
+  top: -10px;
+  border-radius: 50% 50% 0 0;
+}
+
+.ushanka .ear {
+  width: 20px;
+  height: 20px;
+  background: #800000;
+  position: absolute;
+  top: 10px;
+  border-radius: 50%;
+}
+
+.ushanka .ear.left { left: -10px; }
+.ushanka .ear.right { right: -10px; }
+
+/* Olhos sempre piscando */
+#dimitri .eye {
+  width: 15px;
+  height: 15px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 25px;
+  animation: blink 4s infinite;
+}
+
+#dimitri .eye.left { left: 18px; }
+#dimitri .eye.right { right: 18px; }
+
+@keyframes blink {
+  0%, 90%, 100% { height: 15px; }
+  95% { height: 2px; }
+}
+
+#dimitri .eyebrow {
+  width: 18px;
+  height: 3px;
+  background: #333;
+  position: absolute;
+  top: 18px;
+}
+
+#dimitri .eyebrow.left { left: 15px; transform: rotate(-10deg); }
+#dimitri .eyebrow.right { right: 15px; transform: rotate(10deg); }
+
+#dimitri .mouth {
+  width: 40px;
+  height: 10px;
+  border-bottom: 3px solid #000;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 0.3s;
+}
+
+#dimitri .body {
+  width: 70px;
+  height: 80px;
+  background: #0055aa;
+  margin: 0 auto;
+  top: 10px;
+  position: relative;
+  border-radius: 10px;
+}
+
+#dimitri .arm {
+  width: 15px;
+  height: 50px;
+  background: #0055aa;
+  position: absolute;
+  top: 10px;
+  border-radius: 10px;
+  transform-origin: top center;
+  transition: transform 0.3s;
+}
+
+#dimitri .arm.left { left: -15px; }
+#dimitri .arm.right { right: -15px; }
+
+/* ====== Animações Mascote ====== */
+.acenando .arm.left { transform: rotate(-30deg); }
+.acenando .arm.right { transform: rotate(30deg); }
+.acenando .body { animation: pulse 0.3s infinite alternate; }
+
+.triste .mouth {
+  border-bottom: none;
+  border-top: 3px solid #000;
+  border-radius: 20px 20px 0 0;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+/* Neon celebration */
+.neon .body { animation: neonPulse 0.5s infinite alternate; }
+.neon .ushanka { animation: neonPulse 0.5s infinite alternate; }
+@keyframes neonPulse {
+  0% { background-color: #0055aa; box-shadow: none; }
+  50% { background-color: #0f0; box-shadow: 0 0 10px #0f0, 0 0 20px #0f0; }
+  100% { background-color: #0055aa; box-shadow: none; }
+}
+
+/* Mensagem de parabéns */
+#congratsMessage {
+  display: none;
+  font-size: 3em;
+  font-weight: bold;
+  color: #0f0;
+  text-align: center;
+  margin-top: 20px;
+  animation: neonBlink 1s infinite;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  pointer-events: none;
+}
+
+@keyframes neonBlink {
+  0%, 50%, 100% { text-shadow: 0 0 5px #0f0,0 0 10px #0f0,0 0 20px #0f0,0 0 40px #0f0; opacity:1; }
+  25%, 75% { text-shadow: none; opacity: 0.6; }
+}
+
+/* Exemplo do estilo de botão do index */
+.btn {
+    background-color: #4CAF50; /* verde */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: #f2f2f2;
