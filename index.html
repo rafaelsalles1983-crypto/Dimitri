@@ -36,23 +36,40 @@
 /* Aqui você mantém todo o seu CSS existente, mascote, chat, neon, lições bloqueadas, etc. */
 
 
+/* Menu horizontal padrão */
 nav {
   background-color: #eee;
-  padding: 10px;
+  padding: 10px 20px;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  gap: 15px;
+  flex-direction: row; /* horizontal */
+  justify-content: center; /* centraliza os itens */
+  gap: 20px; /* espaço entre os links */
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
 }
 
 nav ul li a {
   text-decoration: none;
   color: #333;
+  font-weight: bold;
+  padding: 8px 12px;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Menu oculto no celular */
+nav ul li a:hover {
+  background-color: #ccc;
+  color: #000;
+}
+
+/* Responsivo: ainda pode esconder no celular */
 @media screen and (max-width: 768px) {
   nav {
     display: none; /* começa oculto */
@@ -74,6 +91,7 @@ nav ul li a {
     display: block; /* quando o botão for clicado */
   }
 }
+
 
 
 </style>
@@ -966,3 +984,4 @@ loginBtn.addEventListener('click', () => {
   </script>
 </body>
 </html>
+
