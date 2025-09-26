@@ -8,8 +8,8 @@
 <style>
 #gameArea { 
   display: grid; 
-  grid-template-columns: repeat(4, 80px); 
-  grid-template-rows: repeat(4, 80px); 
+  grid-template-columns: repeat(4, 50px); 
+  grid-template-rows: repeat(4, 50px); 
   gap: 10px; 
   justify-content: center; 
   margin: 20px auto; 
@@ -48,17 +48,10 @@
   <span id="siteTitle">Славянский клуб</span>
   <button id="languageToggle" style="margin-left:20px;">PT</button>
 </header>
-<nav>
-<ul>
-<li><a href="index.html">Перетаскивание</a></li>
-<li><a href="crossword.html">прогресс</a></li>
-<li><a href="exercises.html">упражнения</a></li>
-<li><a href="jogoCores.html">Игра Цвета</a></li>
-<li><a href="#">Кто мы</a></li>
-<li><a href="contact.html">Контакт</a></li>
-<li><a href="#">словáрь</a></li>
-</ul>
-</nav>
+
+
+
+
 <div class="content">
 <h2>🎮 <span id="gameTitle">Jogo Interativo</span></h2>
 <div id="gameInfo"></div>
@@ -69,6 +62,11 @@
 <button id="playBtn">▶ Play</button>
 <button id="restartBtn">Recomeçar</button>
 <button id="stopBtn">Parar</button>
+
+<div id="backButtonContainer" style="text-align:center; margin-top:15px;">
+  <button id="backBtn" onclick="window.location.href='index.html'">🔙 Voltar</button>
+</div>
+
 </div>
 </div>
 
