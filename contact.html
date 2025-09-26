@@ -10,89 +10,34 @@
 <body>
 <header>
   <span id="headerTitle">Славянский клуб</span>
-  <!-- Botão de idioma -->
-  <button id="langBtn" onclick="toggleLang()">🌐 RU</button>
 </header>
 
-<nav>
-  <ul>
-  	<li><a href="index.html" onclick="saveChatState(); return false;">Перетаскивание</a></li>
-        <li><a href="crossword.html" onclick="saveChatState()">прогресс</a></li>
-        <li><a href="exercises.html" onclick="saveChatState()">упражнения</a></li>
-  	<li><a href="whoare.html" onclick="saveChatState(); return false;">Кто мы</a></li>
-        <li><a href="contact.html" onclick="saveChatState()">Контакт</a></li>
-	<li><a href="#" onclick="abrirDicionario(); return false;">словáрь</a></li>  </ul>
-</nav>
-
-<div class="content">
-  <h2 id="contactTitle">Контакт</h2>
-  <p id="contactText">Здесь вы можете entrar em contato conosco.</p>
-</div>
-
 <script>
-// Traduções
-const translations = {
-  pt: {
-    header: "Clube Eslavo",
-    nav: {
-      drag: "Arrastar",
-      progress: "Progresso",
-      whoare: "Quem somos",
-      contact: "Contato",
-      dictionary: "Dicionário"
-    },
-    page: {
-      title: "Contato",
-      text: "Aqui você pode entrar em contato conosco."
-    }
-  },
-  ru: {
-    header: "Славянский клуб",
-    nav: {
-      drag: "Перетаскивание",
-      progress: "Прогресс",
-      whoare: "Кто мы",
-      contact: "Контакт",
-      dictionary: "Словарь"
-    },
-    page: {
-      title: "Контакт",
-      text: "Здесь вы можете entrar em contato conosco."
-    }
-  }
-};
-
-// Aplica traduções
-function applyTranslations(lang) {
-  localStorage.setItem("lang", lang);
-  const t = translations[lang];
-
-  document.getElementById("headerTitle").innerText = t.header;
-  document.getElementById("nav-drag").innerText = t.nav.drag;
-  document.getElementById("nav-progress").innerText = t.nav.progress;
-  document.getElementById("nav-whoare").innerText = t.nav.whoare;
-  document.getElementById("nav-contact").innerText = t.nav.contact;
-  document.getElementById("nav-dictionary").innerText = t.nav.dictionary;
-
-  document.getElementById("contactTitle").innerText = t.page.title;
-  document.getElementById("contactText").innerText = t.page.text;
-
-  document.getElementById("langBtn").innerText = lang === "ru" ? "🌐 RU" : "🌐 PT";
+/* ====== Botão Voltar ====== */
+#backBtn {
+  padding: 5px 12px;
+  font-size: 0.95em;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 2px solid #333;
+  border-radius: 6px;
+  transition: all 0.3s;
 }
 
-// Alterna idioma
-function toggleLang() {
-  let current = localStorage.getItem("lang") || "ru";
-  let next = current === "ru" ? "pt" : "ru";
-  applyTranslations(next);
+#backBtn:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
 }
+</style>
+</head>
+<body>
 
-// Carrega idioma salvo ao abrir a página
-window.addEventListener("DOMContentLoaded", () => {
-  const savedLang = localStorage.getItem("lang") || "ru";
-  applyTranslations(savedLang);
-});
+<header>Славянский клуб</header>
+
+
 </script>
-
+  <div id="backButtonContainer" style="text-align:center; margin-top:15px;">
+    <button id="backBtn" onclick="window.location.href='index.html'">🔙 Voltar</button>
+  </div>
 </body>
 </html>
